@@ -5,6 +5,7 @@
   <description>
     CrewsControl feature detection on turtlebot3
   </description>
+   <license>Apache 2.0</license>
   <author email="vasilica.badescu@student.upt.ro">Badescu Vasilica</author>
   <author email="vlad.budiu@student.upt.ro">Budiu Vlad</author>
   <author>Badescu Vasilica</author>

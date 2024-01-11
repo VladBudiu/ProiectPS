@@ -5,6 +5,7 @@
   <description>
     TurtleBot3 AutoRace ROS package that controls Raspberry Pi Camera, and process the image
   </description>
+   <license>Apache 2.0</license>
   <author email="vasilica.badescu@student.upt.ro">Badescu Vasilica</author>
   <author email="vlad.budiu@student.upt.ro">Budiu Vlad</author>
   <author>Badescu Vasilica</author>
