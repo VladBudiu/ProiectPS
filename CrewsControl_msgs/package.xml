@@ -2,7 +2,8 @@
 <package format="2">
   <name>CrewsControl_msgs</name>
   <version>1.1.0</version>
-  <description>The CrewsControl_msgs package
+  <description>
+  PS
   </description>
    <license>Apache 2.0</license>
   <author email="vasilica.badescu@student.upt.ro">Badescu Vasilica</author>
