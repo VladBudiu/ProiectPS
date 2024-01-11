@@ -1,10 +1,6 @@
 <launch>
-  <!-- launch CrewsControl_camera_calibration.launch in the raspberry pi before launch this file -->
-
   <arg name="mode" default="action" doc="mode type [calibration, action]"/>
-
   <group ns="camera">
-    <!-- image brightness & contrast compensation of ground-projected image -->
     <node pkg="CrewsControl_camera" type="image_compensation" name="image_compensation" output="screen">
       <rosparam command="load" file="$(find CrewsControl_camera)/calibration/extrinsic_calibration/compensation.yaml" />
       <param if="$(eval mode == 'calibration')" name="/is_extrinsic_camera_calibration_mode" value="True"/>
@@ -14,8 +10,6 @@
       <remap from="/camera/image_output" to="/camera/image_compensated" />
       <remap from="/camera/image_output/compressed" to="/camera/image_compensated/compressed" />
     </node>
-
-    <!-- image ground projection -->
     <node pkg="CrewsControl_camera" type="image_projection" name="image_projection" output="screen">
       <rosparam command="load" file="$(find CrewsControl_camera)/calibration/extrinsic_calibration/projection.yaml" />
       <param if="$(eval mode == 'calibration')" name="/is_extrinsic_camera_calibration_mode" value="True"/>
@@ -27,8 +21,6 @@
       <remap from="/camera/image_calib" to="/camera/image_extrinsic_calib" />
       <remap from="/camera/image_calib/compressed" to="/camera/image_extrinsic_calib/compressed" />
     </node>
-
-    <!-- image brightness & contrast compensation of ground-projected image -->
     <node pkg="CrewsControl_camera" type="image_compensation" name="image_compensation_projection" output="screen">
       <rosparam command="load" file="$(find CrewsControl_camera)/calibration/extrinsic_calibration/compensation.yaml" />
       <param if="$(eval mode == 'calibration')" name="/is_extrinsic_camera_calibration_mode" value="True"/>

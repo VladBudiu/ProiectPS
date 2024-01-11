@@ -3,7 +3,7 @@
   <name>CrewsControl_camera</name>
   <version>1.1.0</version>
   <description>
-    TurtleBot3 AutoRace ROS package that controls Raspberry Pi Camera, and process the image
+    PS
   </description>
    <license>Apache 2.0</license>
   <author email="vasilica.badescu@student.upt.ro">Badescu Vasilica</author>

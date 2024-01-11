@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
  
 import rospy
 import numpy as np
@@ -22,27 +20,23 @@ class ControlMoving():
         self.pub_max_vel = rospy.Publisher('/control/max_vel', Float64, queue_size = 1)
         self.pub_moving_complete = rospy.Publisher('/control/moving/complete', UInt8, queue_size = 1)
 
-        #moving type enum
         self.TypeOfMoving = Enum('TypeOfMoving', 'idle left right forward backward')
         self.TypeOfState = Enum('TypeOfState', 'idle start stop finish')
         
         self.current_pos_x = 0.0
         self.current_pos_y = 0.0
         
-        #moving params
         self.moving_type = UInt8()
         self.moving_angluar = 0.0
         self.moving_linear = 0.0
         self.moving_msg = MovingParam()
 
-        #moving flags
         self.is_step_start = False
         self.is_step_left = False
         self.is_step_right = False
         self.is_step_forward = False
         self.is_step_backward = False
 
-        #moving internal valiables
         self.theta = 0.0
         self.current_theta = 0.0
         self.last_current_theta = 0.0
@@ -54,7 +48,7 @@ class ControlMoving():
         msg_pub_max_vel.data = 0.05
         self.pub_max_vel.publish(msg_pub_max_vel)
 
-        loop_rate = rospy.Rate(100) # 10hz
+        loop_rate = rospy.Rate(100)
         while not rospy.is_shutdown():
             if self.is_step_left == True:
                 self.turn_left(self.moving_msg)
@@ -191,7 +185,6 @@ class ControlMoving():
     def fnTurn(self):
         err_theta = self.current_theta - self.desired_theta
         
-        # rospy.loginfo("err_theta  desired_theta  current_theta : %f  %f  %f", err_theta, self.desired_theta, self.current_theta)
         Kp = 0.45
         Kd = 0.03
 
@@ -207,15 +200,12 @@ class ControlMoving():
         twist.angular.z = -(angular_z * 2)
         self.pub_cmd_vel.publish(twist)
 
-        # rospy.loginfo("angular_z : %f", angular_z)
-
         return err_theta
 
     def fnStraight(self, desired_dist):   
 
         err_pos = math.sqrt((self.current_pos_x - self.start_pos_x) ** 2 + (self.current_pos_y - self.start_pos_y) ** 2) - desired_dist
-    
-        # rospy.loginfo("error_pos2 = %f", err_pos)
+
         Kp = 0.04
         Kd = 0.05
 
@@ -225,7 +215,7 @@ class ControlMoving():
         twist = Twist()
 
         if err_pos < 0:
-            twist.linear.x = 0.1 #0.07
+            twist.linear.x = 0.1
         else:
             twist.linear.x = -0.1
 
@@ -243,7 +233,6 @@ class ControlMoving():
 
         err_pos = math.sqrt((self.current_pos_x - self.start_pos_x) ** 2 + (self.current_pos_y - self.start_pos_y) ** 2) - desired_dist
     
-        # rospy.loginfo("error_pos = %f", err_pos)
         Kp = 0.04
         Kd = 0.05
 
@@ -253,7 +242,7 @@ class ControlMoving():
         twist = Twist()
       
         if err_pos < 0:
-            twist.linear.x = -0.1 #0.07
+            twist.linear.x = -0.1
         else:
             twist.linear.x = 0.1
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import rospy
 import numpy as np
@@ -18,23 +17,14 @@ class ImageCompensation():
             srv_image_compensation = Server(ImageCompensationParamsConfig, self.cbGetImageCompensationParam)
 
 
-        self.sub_image_type = "compressed"  # "compressed" / "raw"
-        self.pub_image_type = "raw"  # "compressed" / "raw"
+        self.sub_image_type = "compressed"
 
 
         if self.sub_image_type == "compressed":
-            # subscribes compressed image 
             self.sub_image_original = rospy.Subscriber('/camera/image_input/compressed', CompressedImage, self.cbImageCompensation, queue_size = 1)
-        elif self.sub_image_type == "raw":
-            # subscribes raw image 
-            self.sub_image_original = rospy.Subscriber('/camera/image_input', Image, self.cbImageCompensation, queue_size = 1)
 
         if self.pub_image_type == "compressed":
-            # publishes compensated image in compressed type 
             self.pub_image_compensated = rospy.Publisher('/camera/image_output/compressed', CompressedImage, queue_size = 1)
-        elif self.pub_image_type == "raw":
-            # publishes compensated image in raw type
-            self.pub_image_compensated = rospy.Publisher('/camera/image_output', Image, queue_size = 1)
 
         self.cvBridge = CvBridge()
 
@@ -48,16 +38,11 @@ class ImageCompensation():
 
     def cbImageCompensation(self, msg_img):
         if self.sub_image_type == "compressed":
-            # converts compressed image to opencv image
             np_image_original = np.frombuffer(msg_img.data, np.uint8)
             cv_image_original = cv2.imdecode(np_image_original, cv2.IMREAD_COLOR)
-        elif self.sub_image_type == "raw":
-            # converts raw image to opencv image
-            cv_image_original = self.cvBridge.imgmsg_to_cv2(msg_img, "bgr8")
 
         cv_image_compensated = np.copy(cv_image_original)
 
-        ## Image compensation based on pseudo histogram equalization
         clip_hist_percent = self.clip_hist_percent
         
         hist_size = 256
@@ -68,7 +53,6 @@ class ImageCompensation():
 
         gray = cv2.cvtColor(cv_image_compensated, cv2.COLOR_BGR2GRAY)
 
-        # histogram calculation
         if clip_hist_percent == 0.0:
             min_gray, max_gray, _, _ = cv2.minMaxLoc(gray)
         else:
@@ -97,12 +81,7 @@ class ImageCompensation():
         cv_image_compensated = cv2.convertScaleAbs(cv_image_compensated, -1, alpha, beta)
 
         if self.pub_image_type == "compressed":
-            # publishes compensated image in compressed type
             self.pub_image_compensated.publish(self.cvBridge.cv2_to_compressed_imgmsg(cv_image_compensated, "jpg"))
-
-        elif self.pub_image_type == "raw":
-            # publishes compensated image in raw type
-            self.pub_image_compensated.publish(self.cvBridge.cv2_to_imgmsg(cv_image_compensated, "bgr8"))
 
     def main(self):
         rospy.spin()

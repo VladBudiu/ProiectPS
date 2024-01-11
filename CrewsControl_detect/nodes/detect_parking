@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-
  
 import rospy
 import os
@@ -12,12 +9,10 @@ from CrewsControl_msgs.msg import MovingParam
 
 class DetectParking():
     def __init__(self):
-        # subscribes state 
         self.sub_scan_obstacle = rospy.Subscriber('/detect/scan', LaserScan, self.cbScanObstacle, queue_size=1)
         self.sub_parking_order = rospy.Subscriber('/detect/parking_order', UInt8, self.cbParkingOrder, queue_size=1)
         self.sub_moving_completed = rospy.Subscriber('/control/moving/complete', UInt8, self.cbMovingComplete, queue_size = 1)
         
-        # publishes state
         self.pub_parking_return = rospy.Publisher('/detect/parking_stamped', UInt8, queue_size=1)
         self.pub_moving = rospy.Publisher('/control/moving/state', MovingParam, queue_size= 1)
         self.pub_max_vel = rospy.Publisher('/control/max_vel', Float64, queue_size = 1)

@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 
 import rospy, roslaunch
 import subprocess
@@ -14,11 +12,9 @@ class CoreNodeController():
         self.ros_package_path = os.path.dirname(os.path.realpath(__file__))
         self.ros_package_path = self.ros_package_path.replace('CrewsControl_core/nodes', '')
 
-        # subscribes : status returned
         self.sub_construction_stamped = rospy.Subscriber('/detect/construction_stamped', UInt8, self.cbconstructionStamped, queue_size=1)
         self.sub_mode_control = rospy.Subscriber('/core/decided_mode', UInt8, self.cbReceiveMode, queue_size=1)
 
-        # publishes orders
         self.pub_construction_order = rospy.Publisher('/detect/construction_order', UInt8, queue_size=1)
         self.pub_mode_return = rospy.Publisher('/core/returned_mode', UInt8, queue_size=1)
 
@@ -40,7 +36,7 @@ class CoreNodeController():
 
         self.is_triggered = False
 
-        loop_rate = rospy.Rate(10) # 10hz
+        loop_rate = rospy.Rate(10)
         while not rospy.is_shutdown():
             if self.is_triggered == True:
                 self.fnControlNode()
@@ -66,7 +62,6 @@ class CoreNodeController():
         self.is_triggered = True
 
     def fnControlNode(self): 
-        # lane_following
         if self.current_mode == self.CurrentMode.lane_following.value:
             rospy.loginfo("Current step : searching construction sign")
             rospy.loginfo("Go to next step : construction")
@@ -80,7 +75,6 @@ class CoreNodeController():
             self.fnLaunch(self.Launcher.launch_control_lane.value, True)
             self.fnLaunch(self.Launcher.launch_control_moving.value, False)
 
-        # construction
         elif self.current_mode == self.CurrentMode.construction.value:
             rospy.loginfo("New trigger for construction")
             msg_pub_construction_order = UInt8()
