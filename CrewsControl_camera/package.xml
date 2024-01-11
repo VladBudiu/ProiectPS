@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>CrewsControl_camera</name>
+  <version>1.1.0</version>
+  <description>
+    TurtleBot3 AutoRace ROS package that controls Raspberry Pi Camera, and process the image
+  </description>
+  <author email="vasilica.badescu@student.upt.ro">Badescu Vasilica</author>
+  <author email="vlad.budiu@student.upt.ro">Budiu Vlad</author>
+  <author>Badescu Vasilica</author>
+  <author>Budiu Vlad</author>
+  <maintainer email="vasilica.badescu@student.upt.ro">Badescu Vasilica</maintainer>
+  <maintainer email="vlad.budiu@student.upt.ro">Budiu Vlad</maintainer>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>dynamic_reconfigure</depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+  <exec_depend>python-numpy</exec_depend>
+  <exec_depend>python-enum34</exec_depend>
+</package>

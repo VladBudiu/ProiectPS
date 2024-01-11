@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>CrewsControl_driving</name>
+  <version>1.1.0</version>
+  <description> 
+    CrewsControl package for driving for turtlebot3
+  </description>
+  <author email="vasilica.badescu@student.upt.ro">Badescu Vasilica</author>
+  <author email="vlad.budiu@student.upt.ro">Budiu Vlad</author>
+  <author>Badescu Vasilica</author>
+  <author>Budiu Vlad</author>
+  <maintainer email="vasilica.badescu@student.upt.ro">Badescu Vasilica</maintainer>
+  <maintainer email="vlad.budiu@student.upt.ro">Budiu Vlad</maintainer>
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>CrewsControl_msgs</depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>python-numpy</exec_depend>
+  <exec_depend>python-enum34</exec_depend>
+</package>
+
