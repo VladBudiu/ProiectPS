@@ -11,6 +11,7 @@ from CrewsControl_detect.cfg import DetectLaneParamsConfig
 
 class DetectLane():
     def __init__(self):
+        self.sub_image_type = "compressed"
         self.hue_white_l = rospy.get_param("~detect/lane/white/hue_l", 0)
         self.hue_white_h = rospy.get_param("~detect/lane/white/hue_h", 179)
         self.saturation_white_l = rospy.get_param("~detect/lane/white/saturation_l", 0)
